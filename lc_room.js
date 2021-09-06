@@ -10,12 +10,6 @@ const firebaseConfig = {
     
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
-function logout()
-{
-      localStorage.removeItem("user_name");
-      localStorage.removeItem("room_name");
-      window.location="index.html";
-}
 
 
     function send()
@@ -26,6 +20,23 @@ function logout()
             message:msg,like:0
       });
 }
+function addRoom()
+    {
+          room_name=document.getElementById("room_name").value ;
+firebase.database().ref("/").child(room_name).update({
+purpose: "adding room name"
+});
+localStorage.setItem("room_name", room_name);
+window.location="lc_page.html";
+    }
+function getData() { firebase.database().ref("/"+room_name).on('value', function(snapshot) { document.getElementById("output").innerHTML = ""; snapshot.forEach(function(childSnapshot) { childKey  = childSnapshot.key; childData = childSnapshot.val(); if(childKey != "purpose") {
+         firebase_message_id = childKey;
+         message_data = childData;
+
+      } });  }); }
+getData();
+
+
 
 function getData() { firebase.database().ref("/"+room_name).on('value', function(snapshot) { document.getElementById("output").innerHTML = ""; snapshot.forEach(function(childSnapshot) { childKey  = childSnapshot.key; childData = childSnapshot.val(); if(childKey != "purpose") {
          firebase_message_id = childKey;
